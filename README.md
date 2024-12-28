@@ -50,14 +50,15 @@ To set up this project locally, follow these steps:
    python manage.py migrate
    
 4.  **Create a superuser (optional, for accessing the admin panel)**:
-   ```bash
-   python manage.py createsuperuser
+    ```bash
+    python manage.py createsuperuser
 
-5. **Run the development server: Start the Django development server to view the application**:
+
+6. **Run the development server: Start the Django development server to view the application**:
    ```bash
    python manage.py runserver
 
-6. **The website will be available at http://127.0.0.1:8000/.**
+7. **The website will be available at http://127.0.0.1:8000/.**
 
 Usage
 User Authentication:
