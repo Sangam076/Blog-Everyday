@@ -27,9 +27,9 @@ Blog-Everyday is a feature-rich blogging platform built using the Django framewo
 ## Technologies Used
 
 - **Backend**: Django (Python Web Framework)
-- **Frontend**: Tailwind CSS
+- **Frontend**: Tailwind CSS, Html, Javascript
 - **Rich Text Editor**: TinyMCE (for blog post creation and customization)
-- **Database**: SQLite (or other DBMS if configured)
+- **Database**: SQLite 
 - **Authentication**: Django’s built-in authentication system
 - **Admin Panel**: Django's Admin, restricted to superusers only
 
@@ -62,25 +62,24 @@ To set up this project locally, follow these steps:
 
 Usage
 User Authentication:
-
 Register and log in to start creating, editing, and managing blog posts.
+
 Profile:
-
 View your own profile and the profiles of other users. You can edit your own profile details.
-Blog Management:
 
+Blog Management:
 Use the TinyMCE editor to write and customize your blog posts with rich text formatting.
 Admin Access:
-
 The admin section is available to superusers for managing blog posts, users, and other data.
+
 Contributing
 Contributions are welcome! To contribute to the project:
-
 Fork the repository.
 Create a new branch (git checkout -b feature-name).
 Make your changes and commit them (git commit -am 'Add new feature').
 Push your changes to your fork (git push origin feature-name).
 Submit a pull request for review.
+
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
@@ -90,7 +89,7 @@ Tailwind CSS: For building the responsive and modern user interface.
 TinyMCE: For the rich text editor functionality.
 Django Admin: For managing and administrating the application content.
 markdown
-Copy code
+
 
 ### Key sections:
 
@@ -100,7 +99,7 @@ Copy code
 - **Installation**: A step-by-step guide for setting up the project locally.
 - **Usage**: Instructions on how users can interact with the platform after installation.
 - **Contributing**: How others can contribute to the project.
-- **License**: Licensing details (adjust if you’re using a different license).
+- **License**: MIT license.
 - **Acknowledgements**: Credit to the key technologies and frameworks used.
 
-This professional README provides a clear, detailed explanation of your project, making it easy for other developers or users to understand its functionality and contribute.
+
