@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    {% load static %}
+    {% static "images" as baseUrl %}
+    <meta charset="UTF-8">
+    <title>{%block title%}{% endblock %} | Blog Everyday</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="{% url 'home' %}" class="text-2xl font-semibold">
+                        Blog <span class="text-green-700 font-bold italic">Everyday</span>
+                    </a>
+                </div>
+
+                <div class="hidden lg:flex lg:items-center lg:space-x-8">
+                    <a href="{% url 'home'%}" class="text-gray-700 hover:text-green-600">Home</a>
+                    <a href="{% url 'about' %}" class="text-gray-700 hover:text-green-600">About us</a>
+                    <a href="{%url 'user_list' %}" class="text-gray-700 hover:text-green-600">Users</a>
+                    <a href="{% url 'blog' %}" class="text-gray-700 hover:text-green-600">Blogs</a>
+                    
+                    <div class="flex items-center space-x-2">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'create' %}">Create Blog</a>
+                             <img src="{% static 'blog/add.png' %}" alt="Add Icon" class="h-5 w-5">
+                            <a class="pl-4"href="{% url 'profile_view' %}">Profile</a>
+                            <img src="{% static 'blog/user.png' %}" alt="Add Icon" class="h-5 w-5">
+                        {% else %}
+                            <a href="{% url 'login' %}">Create Blog</a>
+                            
+                        {% endif %}
+
+                        
+                    </div>
+                    <!-- Replace the existing Get Started button with this -->
+{% if user.is_authenticated %}
+    <a href="{% url 'logout' %}" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700">
+        Logout
+    </a>
+{% else %}
+    <div class="relative inline-block text-left" x-data="{ open: false }">
+        <button @click="open = !open" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700">
+            Get Started
+        </button>
+        
+        <!-- Dropdown menu -->
+        <div x-show="open" 
+             @click.away="open = false"
+             class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+             role="menu" 
+             aria-orientation="vertical" 
+             aria-labelledby="menu-button">
+            <div class="py-1" role="none">
+                <a href="{% url 'login' %}" 
+                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-600" 
+                   role="menuitem">
+                    Login
+                </a>
+                <a href="{% url 'register' %}" 
+                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-green-600" 
+                   role="menuitem">
+                    Register
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+                </div>
+
+                <div class="lg:hidden flex items-center">
+                    <button type="button" id="hamburgerMenu" class="text-gray-700 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden lg:hidden bg-white">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" class="block px-3 py-2 text-gray-700">Home</a>
+                <a href="#" class="block px-3 py-2 text-gray-700">About us</a>
+                <a href="#" class="block px-3 py-2 text-gray-700">Features</a>
+                <a href="#" class="block px-3 py-2 text-gray-700">Blogs</a>
+                <a href="#" class="block px-3 py-2 text-gray-700">Contact us</a>
+                <a href="#" class="block px-3 py-2 text-gray-700">Create Post</a>
+                <a href="#" class="block px-3 py-2 text-green-600">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-gray-900 font-semibold text-lg mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-green-600">Home</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-green-600">About us</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-green-600">Contact us</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-green-600">Get started</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-gray-900 font-semibold text-lg mb-4">Get help</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-green-600">FAQ</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-green-600">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-gray-900 font-semibold text-lg mb-4">Write</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-green-600">Create Post</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-green-600">Style Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-gray-900 font-semibold text-lg mb-4">Get Updates</h3>
+                    <div class="space-y-4">
+                        <input type="email" placeholder="Enter your email" class="w-full px-4 py-2 border rounded-md">
+                        <button class="w-full bg-green-600 text-white px-4 py-2 rounded-md">Subscribe</button>
+                    </div>
+                    <h3 class="text-gray-900 font-semibold text-lg mt-6 mb-4">Follow Us On</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-600 hover:text-green-600">
+                            <img src="{% static 'blog/facebook (1).png' %}" alt="Facebook" class="h-6 w-6">
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-green-600">
+                            <img src="{% static 'blog/instagram (1).png' %}" alt="Instagram" class="h-6 w-6">
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-green-600">
+                            <img src="{% static 'blog/twitter.png' %}" alt="Twitter" class="h-6 w-6">
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-green-600">
+                            <img src="{% static 'blog/linkedin.png' %}" alt="LinkedIn" class="h-6 w-6">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <p class="text-center text-gray-600 text-sm">© Copyright. All rights reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const hamburgerMenu = document.getElementById("hamburgerMenu");
+        const mobileMenu = document.getElementById("mobileMenu");
+        
+        hamburgerMenu.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+
+
+       
+    const carouselContent = document.getElementById('carousel-content');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    let currentIndex = 0;
+
+    prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : 2; 
+        carouselContent.style.transform = `translateX(-${currentIndex * 100}%)`;
+    });
+
+    nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex < 2) ? currentIndex + 1 : 0; 
+        carouselContent.style.transform = `translateX(-${currentIndex * 100}%)`;
+    });
+
+
+    </script>
+</body>
+</html>

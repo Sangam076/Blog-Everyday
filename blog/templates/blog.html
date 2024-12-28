@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block title %}Blogs{% endblock %}
+
+{% block content %}
+<div class="mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Search and Filter Section -->
+    <div class="bg-gray-50 rounded-lg p-12 mb-12">
+        <form method="get" action="{% url 'blog' %}">
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                <!-- Search Input -->
+                <input 
+                    type="text" 
+                    name="name" 
+                    placeholder="Search posts..." 
+                    value="{{ request.GET.name }}" 
+                    class="w-1/3 px-4 py-2 rounded-md border"
+                >
+
+                <!-- Category Dropdown -->
+                <select 
+                    name="category" 
+                    class="px-4 py-2 rounded-md border"
+                >
+                    <option value="All Categories" {% if request.GET.category == "All Categories" %}selected{% endif %}>
+                        All Categories
+                    </option>
+                    {% for key, value in categories %}
+                        <option value="{{ key }}" {% if request.GET.category == key %}selected{% endif %}>
+                            {{ value }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <!-- Submit Button -->
+                <button 
+                    type="submit" 
+                    class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700"
+                >
+                    Search
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Blog Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for blog in page_obj %}
+            <a href="{% url 'blog_detail' blog.id %}" class="block hover:no-underline">
+                <article class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 transition-transform hover:scale-105 cursor-pointer">
+                    {% if blog.image %}
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="w-full h-48 object-cover">
+                    {% endif %}
+                    <div class="p-6">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <span class="text-gray-500 text-sm">{{ blog.created_at|date:"M d, Y" }}</span>
+                            {% if blog.updated_at != blog.created_at %}
+                                <span class="text-gray-400 text-sm">(Updated: {{ blog.updated_at|date:"M d, Y" }})</span>
+                            {% endif %}
+                        </div>
+                        <h2 class="text-xl font-semibold mb-2 text-gray-900">{{ blog.title }}</h2>
+                        <p class="text-gray-600 mb-4 line-clamp-3">{{ blog.content|safe|striptags|truncatewords:30 }}</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                {% if blog.author.profile.photo %}
+                                    <img src="{{ blog.author.profile.photo.url }}" alt="{{ blog.author.username }}" class="h-8 w-8 rounded-full">
+                                {% endif %}
+                                <span class="text-sm text-gray-700">{{ blog.author.username }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+        <div class="mt-12 flex justify-center">
+            <nav class="flex items-center space-x-2">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" 
+                       class="px-3 py-1 border rounded-md text-gray-500 hover:bg-gray-50">
+                        Previous
+                    </a>
+                {% else %}
+                    <button disabled class="px-3 py-1 border rounded-md text-gray-300">Previous</button>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if num == page_obj.number %}
+                        <span class="px-3 py-1 border rounded-md bg-green-600 text-white">{{ num }}</span>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                           class="px-3 py-1 border rounded-md text-gray-500 hover:bg-gray-50">
+                            {{ num }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                       class="px-3 py-1 border rounded-md text-gray-500 hover:bg-gray-50">
+                        Next
+                    </a>
+                {% else %}
+                    <button disabled class="px-3 py-1 border rounded-md text-gray-300">Next</button>
+                {% endif %}
+            </nav>
+        </div>
+    {% endif %}
+</div>
+
+<div class="mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Blog Detail Section -->
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200">
+        {% if blog.image %}
+            <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="w-full h-96 object-cover rounded-lg">
+        {% endif %}
+        <div class="p-6">
+            <div class="flex items-center space-x-2 mb-4">
+                <span class="text-gray-500 text-sm">{{ blog.created_at|date:"M d, Y" }}</span>
+                {% if blog.updated_at != blog.created_at %}
+                    <span class="text-gray-400 text-sm">(Updated: {{ blog.updated_at|date:"M d, Y" }})</span>
+                {% endif %}
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900">{{ blog.title }}</h2>
+            <div class="prose mt-4">{{ blog.content |safe }}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Blog Detail{% endblock %}
+
+{% block content %}
+
+<!-- Blog Detail Page -->
+<div class="max-w-4xl mt-16 mx-auto p-6">
+    <h1 class="text-3xl font-semibold mb-4">{{ blog.title }}</h1>
+    <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="w-full h-80 object-cover mb-6">
+    <p class="text-gray-600">{{ blog.content |safe }}</p>
+    <div class="flex justify-between items-center mt-6">
+    <div class="flex items-center">
+        {% if blog.profile %}
+            <img src="{{ blog.profile.url }}" alt="{{ blog.author }}" class="h-10 w-10 rounded-full">
+        {% endif %}
+        <span class="ml-2 text-sm text-gray-700">{{ blog.author }}</span>
+    </div>
+        <span class="ml-2 text-sm text-gray-700">{{ blog.created_at }}</span>
+    </div>
+    
+</div>
+
+<div class="max-w-4xl mx-auto px-6 mt-8">
+    <h2 class="text-2xl font-semibold mb-6 text-gray-900">Comments</h2>
+
+    <!-- Display Comments -->
+    <div class="space-y-6">
+        {% for comment in blog.comments.all %}
+            <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm">
+                <div class="flex items-center mb-3">
+                    <span class="font-semibold text-gray-900">{{ comment.author.username }}</span>
+                    <span class="text-sm text-gray-500 ml-3">{{ comment.created_at|date:"M d, Y" }}</span>
+                </div>
+                <p class="text-gray-700 mb-4">{{ comment.content }}</p>
+
+                <!-- Reply Section -->
+                <div class="ml-8 mt-4">
+                    {% for reply in comment.replies.all %}
+                        <div class="bg-gray-50 border border-gray-100 p-4 rounded-lg shadow-sm mb-3">
+                            <div class="flex items-center mb-2">
+                                <span class="font-semibold text-gray-900">{{ reply.author.username }}</span>
+                                <span class="text-sm text-gray-500 ml-3">{{ reply.created_at|date:"M d, Y" }}</span>
+                            </div>
+                            <p class="text-gray-700">{{ reply.content }}</p>
+                        </div>
+                    {% endfor %}
+
+                    <!-- Reply Form -->
+                    <div class="mt-4">
+                        <form method="post" action="{% url 'reply_comment' comment.id %}">
+                            {% csrf_token %}
+                            <textarea 
+                                name="content" 
+                                rows="3" 
+                                class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-colors" 
+                                placeholder="Reply to this comment..."
+                            ></textarea>
+                            <button type="submit" class="mt-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full transition-colors">
+                                Reply
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-gray-500 text-center py-8">Be the first to comment!</p>
+        {% endfor %}
+    </div>
+
+    <!-- Comment Form -->
+    <div class="mt-12 mb-16">
+        <h3 class="text-xl font-semibold mb-4 text-gray-900">Add a Comment</h3>
+        <form method="post" action="{% url 'add_comment' blog.id %}">
+            {% csrf_token %}
+            <textarea 
+                name="content" 
+                rows="4" 
+                class="w-full p-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-colors" 
+                placeholder="Write your comment..."
+            ></textarea>
+            <button type="submit" class="mt-3 bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full transition-colors">
+                Post Comment
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

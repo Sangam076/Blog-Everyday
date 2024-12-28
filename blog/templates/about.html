@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} About {% endblock %}
+{% block content %}
+<div class="mt-16">
+    <!-- Hero Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-wrap items-center mb-16">
+            <div class="w-full lg:w-1/2 pr-4">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    We are
+                    <span class="text-green-600">Blog Everyday</span>
+                    <br>Your Digital Storytellers
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-6">Where words come to life and stories find their voice</p>
+                <a href="{% url 'about' %}" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700">
+                    Read Our Stories
+                </a>
+            </div>
+            <div class="w-full lg:w-1/2 pt-16 mt-16 lg:mt-0">
+                <img src="{% static 'blog/Team.jpg' %}" alt="Blog Team Working" class="rounded-lg shadow-lg">
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center pt-24 mb-16">
+            <div class="p-6 bg-white rounded-lg shadow">
+                <h2 class="text-4xl font-bold mb-2">1500+</h2>
+                <p class="text-gray-600">Published Articles</p>
+            </div>
+            <div class="p-6 bg-white rounded-lg shadow">
+                <h2 class="text-4xl font-bold mb-2">50K+</h2>
+                <p class="text-gray-600">Monthly Readers</p>
+            </div>
+            <div class="p-6 bg-white rounded-lg shadow">
+                <h2 class="text-4xl font-bold mb-2">100+</h2>
+                <p class="text-gray-600">Contributing Writers</p>
+            </div>
+        </div>
+
+        <!-- Why Choose Us Section -->
+        <div class="mb-16 pt-40">
+            <h2 class="text-3xl font-bold text-center mt-16 mb-12">WHY CHOOSE BLOG EVERYDAY?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 bg-white rounded-lg shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+                        <img src="{% static 'blog/high-quality.png' %}" alt="Quality" class="h-8 w-8">
+                    </div>
+                    <h3 class="font-bold mb-2">Quality Content</h3>
+                    <p class="text-gray-600">Carefully curated and professionally edited articles</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+                        <img src="{% static 'blog/culture.png' %}" alt="Diverse" class="h-8 w-8">
+                    </div>
+                    <h3 class="font-bold mb-2">Diverse Perspectives</h3>
+                    <p class="text-gray-600">Writers from various backgrounds and expertise</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+                        <img src="{% static 'blog/changes.png' %}" alt="Updates" class="h-8 w-8">
+                    </div>
+                    <h3 class="font-bold mb-2">Regular Updates</h3>
+                    <p class="text-gray-600">Fresh content published daily</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meet the Team -->
+        <div class="mb-16 pt-40">
+            <h2 class="text-3xl font-bold text-center mb-12">MEET THE EDITORIAL TEAM</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <img src="{% static 'blog/Human 6.jpg' %}" alt="Sarah Mitchell" class="w-48 h-48 rounded-full mx-auto mb-4 object-cover">
+                    <h3 class="font-bold">Sarah Mitchell</h3>
+                    <p class="text-gray-600">Editor-in-Chief</p>
+                </div>
+                <div class="text-center">
+                    <img src="{% static 'blog/Human 4.jpg' %}" alt="David Chen" class="w-48 h-48 rounded-full mx-auto mb-4 object-cover">
+                    <h3 class="font-bold">David Chen</h3>
+                    <p class="text-gray-600">Managing Editor</p>
+                </div>
+                <div class="text-center">
+                    <img src="{% static 'blog/human 5.jpg' %}" alt="Maria Rodriguez" class="w-48 h-48 rounded-full mx-auto mb-4 object-cover">
+                    <h3 class="font-bold">Maria Rodriguez</h3>
+                    <p class="text-gray-600">Content Director</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Join Our Team -->
+        <div class="mb-16 pt-40">
+            <h2 class="text-3xl font-bold text-center mb-12">JOIN OUR TEAM</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center p-6 bg-white rounded-lg shadow">
+                    <div class="w-24 h-24 mx-auto mb-4">
+                        <img src="{% static 'blog/copy-writing.png' %}" alt="Writer" class="h-20 w-20 mx-auto">
+                    </div>
+                    <h3 class="font-bold mb-2">Content Writer</h3>
+                    <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700">Apply</a>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow">
+                    <div class="w-24 h-24 mx-auto mb-4">
+                        <img src="{% static 'blog/camera.png' %}" alt="Photographer" class="h-20 w-20 mx-auto">
+                    </div>
+                    <h3 class="font-bold mb-2">Photographer</h3>
+                    <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700">Apply</a>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow">
+                    <div class="w-24 h-24 mx-auto mb-4">
+                        <img src="{% static 'blog/film.png' %}" alt="Video" class="h-20 w-20 mx-auto">
+                    </div>
+                    <h3 class="font-bold mb-2">Video Editor</h3>
+                    <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700">Apply</a>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow">
+                    <div class="w-24 h-24 mx-auto mb-4">
+                        <img src="{% static 'blog/pen-tool.png' %}" alt="Designer" class="h-20 w-20 mx-auto">
+                    </div>
+                    <h3 class="font-bold mb-2">Graphic Designer</h3>
+                    <a href="#" class="inline-block bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700">Apply</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}'s Profile{% endblock %}
+
+{% block content %}
+<div class="mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Profile Section -->
+    <div class="flex items-center space-x-8">
+        <!-- Profile Photo -->
+        <div class="w-32 h-32 rounded-full overflow-hidden ">
+            <img src="{{ user.profile.photo.url }}" alt="{{ user.username }}'s photo" class="w-full h-full object-cover">
+        </div>
+        
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">{{ user.username }}</h1>
+            <p class="text-lg text-gray-600">{{ user.profile.bio|default:"No bio available" }}</p>
+            
+            <!-- Social Links Section -->
+            <div class="mt-4">
+                {% if user.profile.twitter %}
+                    <a href="{{ user.profile.twitter }}" class="text-blue-500 hover:text-blue-700" target="_blank">Twitter</a>
+                {% endif %}
+                {% if user.profile.facebook %}
+                    <a href="{{ user.profile.facebook }}" class="ml-4 text-blue-700 hover:text-blue-900" target="_blank">Facebook</a>
+                {% endif %}
+                {% if user.profile.instagram %}
+                    <a href="{{ user.profile.instagram }}" class="ml-4 text-blue-700 hover:text-pink-700" target="_blank">Instagram</a>
+                {% endif %}
+                {% if user.profile.linkedin %}
+                    <a href="{{ user.profile.linkedin }}" class="ml-4 text-blue-800 hover:text-blue-900" target="_blank">LinkedIn</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Posts Section -->
+    <div class="mt-12a ">
+        <div class="grid grid-cols-3 gap-1 md:gap-4">
+            {% for post in posts %}
+            <div class="relative aspect-square group">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" 
+                     alt="{{ post.title }}"
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                    <div class="text-white text-center p-4">
+                        <h3 class="font-semibold text-sm mb-2">{{ post.title }}</h3>
+                        <a href="{% url 'blog_detail' post.id %}" class="text-xs underline">Read More</a>
+                        <div class="mt-2 text-xs">
+                            <p>{{ post.created_at|date:"M d, Y" }}</p>
+                            <p>{{ post.category }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <span class="text-gray-500">No Image</span>
+                </div>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="col-span-3 py-8 text-center text-gray-500">
+                <p class="text-lg">No posts yet</p>
+                {% if is_owner %}
+                <p class="text-sm mt-2">Share your first blog post!</p>
+                <a href="{% url 'create_post' %}" class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    Create Post
+                </a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
